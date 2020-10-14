@@ -1,16 +1,18 @@
-fn scope_and_shadowing() {
-    let a = 123;
+// It's basically inserted into the rest of the application.
+// There's no fixed address.
+const MEANING_OF_LIFE: u8 = 42;
 
-    {
-        // This inner a shadows the outer a
-        let a = 456;
-
-        println!("a = {}", a);
-    }
-
-    println!("a = {}", a);
-}
+// Actually has an address.
+// Isn't normally mutable because any part of the application could read/write the var and break memory safety.
+static mut Z: i32 = 123;
 
 fn main() {
-    scope_and_shadowing();
+    println!("meaning of life =  {}", MEANING_OF_LIFE);
+
+    // I promise to not mess up Z
+    unsafe
+    {
+        Z = 777;
+        println!("Z =  {}", Z);
+    }
 }
