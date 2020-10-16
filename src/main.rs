@@ -1,8 +1,15 @@
 fn main() {
-    let temp = 23;
+    // For 1 to 11, excluding 11, do...
+    for x in 1..11 {
+        println!("x = {}", x);
+    }
 
-    // Like: `let day = temp > 20 ? "sunny" : "cloudy";`
-    let day = if temp > 20 { "sunny" } else { "cloudy" };
+    for (pos, x) in (30..41).enumerate() {
+        println!("pos = {}, x = {}", pos, x);
+    }
 
-    println!("day is {}", day);
+    // This doesn't seem to work, says e is (usize, i32)
+    // for e in (30..41).enumerate() {
+    //     println!("e", e);
+    // }
 }
