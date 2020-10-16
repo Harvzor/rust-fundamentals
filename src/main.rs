@@ -1,15 +1,14 @@
 fn main() {
-    // For 1 to 11, excluding 11, do...
-    for x in 1..11 {
-        println!("x = {}", x);
-    }
+    let country_code = 1000;
 
-    for (pos, x) in (30..41).enumerate() {
-        println!("pos = {}, x = {}", pos, x);
-    }
+    let country = match country_code
+    {
+        44 => "UK",
+        46 => "Sweden",
+        // ..= is inclusive, using .. is currently "experimental"
+        1..=999 => "unknown",
+        _ => "invalid"
+    };
 
-    // This doesn't seem to work, says e is (usize, i32)
-    // for e in (30..41).enumerate() {
-    //     println!("e", e);
-    // }
+    println!("country = {}" , country);
 }
