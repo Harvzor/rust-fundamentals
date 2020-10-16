@@ -1,14 +1,13 @@
-fn main() {
-    let country_code = 1000;
+struct Point {
+    x: f64,
+    y: f64,
+}
 
-    let country = match country_code
-    {
-        44 => "UK",
-        46 => "Sweden",
-        // ..= is inclusive, using .. is currently "experimental"
-        1..=999 => "unknown",
-        _ => "invalid"
+fn main() {
+    let p = Point {
+        x: 3.0,
+        y: 4.0,
     };
 
-    println!("country = {}" , country);
+    println!("point p is at ({}, {})", p.x, p.y);
 }
