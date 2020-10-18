@@ -1,46 +1,50 @@
 use std::mem;
 
 fn main() {
-    // Array, 5 i32s.
-    // Array is where I know how many elements I have.
-    // Not variable size, use vector for that?
-    let mut a: [i32;5] = [1, 2, 3, 4, 5];
+    // Like a List in C#, grows dynamically.
+    // Must be mutable, otherwise you can't change it...
+    let mut a =  Vec::new();
 
-    println!("a has {} elements, first is {}", a.len(), a[0]);
+    a.push(1);
+    a.push(2);
+    a.push(3);
 
-    a[0] = 321;
+    println!("a = {:?}", a);
 
-    println!("a[0] s {}", a[0]);
+    a.push(44);
 
-    // Output debug information with `{:?}`.
-    println!("a s {:?}", a);
+    println!("a = {:?}", a);
 
-    if a == [321, 2, 3, 4, 5] {
-        println!("does match");
+    // Cannot use signed values.
+    // Must be the same size at the machine.
+    // let index: usize = 111;
+
+    // a[index] = 321;
+
+    // Panics.
+    // println!("a[0] = {}", a[index]);
+
+    // Returns Option type.
+    match a.get(3) {
+        Some(x) => println!("a[3] = {}", x),
+        None => println!("error, no such element"),
     }
 
-    // 10 elements, all are 1.
-    let b = [1u16; 10];
-
-    for i in 0..b.len() {
-        println!("{}", b[i]);
+    // No idea why the & is there, doesn't seem to change anything.
+    for x in &a {
+        println!("{}", x);
     }
 
-    // Each u16 takes up 2 bytes, so 10*2:
-    println!("b took up {} bytes", mem::size_of_val(&b));
+    // Also returns an Option since we can't be sure there are any elements to pop.
+    let last_elem = a.pop();
 
-    let matrix: [[f32;3];2] = [
-        [1.0, 0.0, 0.0],
-        [0.0, 2.0, 0.0],
-    ];
+    println!("last elem is {:?}, a = {:?}", last_elem, a);
 
-    println!("{:?}", matrix);
+    // Could be a none so this doesn't work.
+    // let Some(_last_value) = a.pop();
 
-    for i in 0..matrix.len() {
-        for j in 0..matrix[i].len() {
-            if i == j {
-                println!("matrix[{}][{}] is {}", i, j, matrix[i][j]);
-            }
-        }
+    // While `a.pop()` yields a Some, do...
+    while let Some(x) = a.pop() {
+        println!("{}", x);
     }
 }
