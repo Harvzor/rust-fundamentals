@@ -1,31 +1,46 @@
 use std::mem;
 
-enum Color {
-    Red,
-    Green,
-    Blue,
-    // Tuple
-    RgbColor(u8, u8, u8),
-    CmykColor { cyan: u8, magenta: u8, yellow: u8, black: u8 }
-}
-
 fn main() {
-    // let c = Color::RgbColor(10, 0, 0);
-    let c = Color::CmykColor {
-        cyan: 0,
-        magenta: 0,
-        yellow: 0,
-        black: 255,
-    };
+    // Array, 5 i32s.
+    // Array is where I know how many elements I have.
+    // Not variable size, use vector for that?
+    let mut a: [i32;5] = [1, 2, 3, 4, 5];
 
-    match c
-    {
-        Color::Red => println!("r"),
-        Color::Green => println!("g"),
-        Color::Blue => println!("b"),
-        Color::RgbColor(0, 0, 0) => println!("black"),
-        Color::RgbColor(r, g, b) => println!("rgb({}, {}, {})", r, g, b),
-        Color::CmykColor { cyan: _, magenta: _, yellow: _, black: 255} => println!("black"),
-        _ => ()
+    println!("a has {} elements, first is {}", a.len(), a[0]);
+
+    a[0] = 321;
+
+    println!("a[0] s {}", a[0]);
+
+    // Output debug information with `{:?}`.
+    println!("a s {:?}", a);
+
+    if a == [321, 2, 3, 4, 5] {
+        println!("does match");
+    }
+
+    // 10 elements, all are 1.
+    let b = [1u16; 10];
+
+    for i in 0..b.len() {
+        println!("{}", b[i]);
+    }
+
+    // Each u16 takes up 2 bytes, so 10*2:
+    println!("b took up {} bytes", mem::size_of_val(&b));
+
+    let matrix: [[f32;3];2] = [
+        [1.0, 0.0, 0.0],
+        [0.0, 2.0, 0.0],
+    ];
+
+    println!("{:?}", matrix);
+
+    for i in 0..matrix.len() {
+        for j in 0..matrix[i].len() {
+            if i == j {
+                println!("matrix[{}][{}] is {}", i, j, matrix[i][j]);
+            }
+        }
     }
 }
