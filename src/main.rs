@@ -1,17 +1,30 @@
-struct Point<T, V> {
-    x: T,
-    y: V,
+// x goes on the stack
+fn print_value(x: i32) {
+    println!("value = {}", x);
 }
 
-struct Line<T> {
-    start: Point<T, T>,
-    end: Point<T, T>,
+// & = reference
+// mut = mutable
+fn increase(x: &mut i32) {
+    // *x is derefencing the reference.
+    *x += 1;
+}
+
+fn product(x: i32, y: i32) -> i32 {
+    x * y
 }
 
 fn main() {
-    let a: Point<u16, u16> = Point { x: 0, y: 0 };
-    let b = Point { x: 1.2, y: 3.4 };
+    print_value(33);
 
-    // Doesn't work since Line start and end must be the same type.
-    //let line = Line { start: a, end: b };
+    let mut z = 1;
+
+    // & = I'm letting them borrow
+    increase(&mut z);
+
+    println!("z = {}", z);
+
+    let p = product(3, 5);
+
+    println!("a = {}, b = {}, p = {}", 3, 5, p);
 }
