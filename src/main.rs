@@ -1,30 +1,35 @@
-// x goes on the stack
-fn print_value(x: i32) {
-    println!("value = {}", x);
+struct Point {
+    x: f64,
+    y: f64,
 }
 
-// & = reference
-// mut = mutable
-fn increase(x: &mut i32) {
-    // *x is derefencing the reference.
-    *x += 1;
+struct Line {
+    start: Point,
+    end: Point,
 }
 
-fn product(x: i32, y: i32) -> i32 {
-    x * y
+impl Line {
+    // len is a method on the Line class
+    // &self is a reference to this class
+    fn len(&self) -> f64 {
+        let dx = self.start.x - self.end.x;
+        let dy = self.start.y - self.end.y;
+
+        (dx*dx+dy*dy).sqrt()
+    }
 }
 
 fn main() {
-    print_value(33);
-
-    let mut z = 1;
-
-    // & = I'm letting them borrow
-    increase(&mut z);
-
-    println!("z = {}", z);
-
-    let p = product(3, 5);
-
-    println!("a = {}, b = {}, p = {}", 3, 5, p);
+    let line = Line {
+        start: Point {
+            x: 3.0,
+            y: 3.0,
+        },
+        end: Point {
+            x: 4.0,
+            y: 4.0,
+        },
+    };
+    
+    println!("{}", line.len());
 }
