@@ -1,88 +1,43 @@
-// I guess a trait is an abstract class
-trait Animal {
-    // Static function since it doesn't take &self as a parameter.
-    fn create(name: &'static str) -> Self;
-    // Must be implemented.
-    fn name(&self) -> &'static str;
-    // Doesn't need to be implemented as it as a default implementation.
-    fn talk(&self)
-    {
-        println!("{} cannot talk", self.name());
-    }
-}
-
-struct Human {
-    name: &'static str
-}
-
-struct Cat {
-    name: &'static str
-}
-
-impl Animal for Human {
-    fn create(name: &'static str) -> Human {
-        Human {
-            name: name,
-        }
-    }
-    fn name(&self) -> &'static str {
-        self.name
-    }
-    fn talk(&self) {
-        println!("{} says hello", self.name());
-    }
-}
-
-impl Animal for Cat {
-    fn create(name: &'static str) -> Cat {
-        Cat {
-            name: name,
-        }
-    }
-    fn name(&self) -> &'static str {
-        self.name
-    }
-    fn talk(&self) {
-        println!("{} says meow", self.name());
-    }
-}
-
-trait Summable<T> {
-    fn sum(&self) -> T;
-}
-
-impl Summable<i32> for Vec<i32> {
-    fn sum(&self) -> i32 {
-        // let mut result: i32 = 0;
-
-        // for x in self {
-        //     result += *x;
-        // }
-
-        // result
-
-        return self
-            .iter()
-            .fold(1, |sum, x| sum * x);
-    }
-}
-
 fn main() {
-    // let h = Human {
-    //     name: "Harvey",
-    // };
-    // The compiler actually chooses to use the Human::create() method since we specified the type.
-    let h: Human = Animal::create("Harvey");
+    // v owns the memory that is stored
+    // v itself is on the stack, likely a pointer?
+    // v (the data) is on the heap
+    let v = vec![1, 2, 3];
 
-    h.talk();
+    // v2 is copying the pointer
+    //let v2 = v;
 
-    let c = Cat {
-        name: "Cattoo",
+    // Does not compile because v2 now has the pointer,
+    // and rust ensures safety by making sure only one
+    // variable points to the data.
+    //println!("{:?}", v);
+
+    // foo(v) also would borrow the value, not letting us use v anymore.
+    //let foo = |v: Vec<i32>| ();
+    //foo(v);
+
+    let u = 1;
+    let _u2 = u;
+
+    // However this works because with primitive types, the value is copied.
+    // Copying such simple types on the stack is fine because they take up such little memory.
+    println!("u = {}", u);
+
+    // Putting something deliverately on the heap means we must have a pointer here:
+    let u3 = Box::new(1);
+    // Which means a borrow occurs here:
+    let _u4 = u3;
+
+    // So this cannot use a borrowed value:
+    //println!("u3 = {}", *u3);
+
+    // This is an inconvenient way of controller ownership:
+    let print_vector = |x: Vec<i32>| -> Vec<i32> {
+        println!("{:?}", x);
+
+        // Return control of the vector...
+        x
     };
 
-    c.talk();
-
-    let a = vec![1, 2, 3];
-
-    println!("sum = {}", a.sum());
+    let vv = print_vector(v);
 }
