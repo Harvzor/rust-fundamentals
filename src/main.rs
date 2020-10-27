@@ -1,9 +1,15 @@
-extern crate rand;
+extern crate phrases;
 
-use rand::prelude::*;
+use phrases::greetings::french;
 
 fn main() {
-    let mut rng = rand::thread_rng();
+    println!("English: {}, {}",
+        phrases::greetings::english::hello(),
+        phrases::greetings::english::goodbye(),
+    );
 
-    let b: bool = rng.gen();
+    println!("French: {}, {}",
+        french::hello(),
+        french::goodbye(),
+    );
 }
